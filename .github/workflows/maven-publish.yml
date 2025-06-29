@@ -45,6 +45,11 @@ jobs:
           distribution: 'temurin'
           java-version: 17
           cache: 'gradle'
+      - name: Configure signing properties
+        run: |
+          echo "signing.keyAlias=key0" >> local.properties
+          echo "signing.keyPassword=$FCL_KEYSTORE_PASSWORD" >> local.properties
+          echo "signing.storePassword=$FCL_KEYSTORE_PASSWORD" >> local.properties
       - name: Build ${{matrix.arch}} .apk
         run: ./gradlew assemblerelease -Darch=${{matrix.arch}} --no-daemon --quiet
       - name: Create project zip
